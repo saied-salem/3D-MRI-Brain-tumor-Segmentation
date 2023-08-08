@@ -37,9 +37,11 @@ def splitData(images_mask_dict, test_size):
 
     return train_paths , val_paths
 
-def getLoader(batch_size, json_path):
+def getLoader(batch_size,val_percent, json_path):
     train_files, validation_files = readDate(json_path)
-    print(train_files)
+
+    train_paths , val_paths= splitData(train_files, val_percent)
+    print(train_paths)
     train_transform = transforms.Compose(
         [
             transforms.LoadImaged(keys=["images", "mask"]),

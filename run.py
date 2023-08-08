@@ -10,7 +10,7 @@ import json
 
 
 configerations= None
-with open('model_config.json') as json_file:
+with open('Brain_tumer_seg/model_config.json') as json_file:
     configerations = json.load(json_file)
     # Print the type of data variable
     print("Type:", type(configerations))
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         wb_project_name = configerations['wb_project_name'],
         wb_run_name = configerations['wb_run_name'],
         model = model,
-        loss_func= loss_func
+        loss_func= loss_func,
         device = device,
         load_weights = configerations['load_weights'],
         weights_dir = configerations['saving_weights_dir'],

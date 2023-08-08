@@ -1,7 +1,7 @@
 {
     "wb_project_name": "U_Net_Name",
     "wb_run_name": "U_Net_trail_number [i]",
-    "VAE" : false,
+    "VAE" : true,
     "input_channels" : 4,
     "output_classes" : 3,
     "epochs" : 30,

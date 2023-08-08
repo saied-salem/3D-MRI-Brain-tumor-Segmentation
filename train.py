@@ -20,7 +20,7 @@ from torch import optim
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
 from metrics.evaluate import evaluate
-
+import numpy as np
 def train_model(
         wb_project_name,
         wb_run_name,
@@ -61,7 +61,7 @@ def train_model(
     # Change here to adapt to your data
     # n_channels=3 for RGB images
     # n_classes is the number of probabilities you want to get per pixe
-    model = model.to(memory_format=torch.channels_last)
+ 
     print(model.named_parameters())
     logging.info(f'Network:\n'
                  f'\t{input_channels} input channels\n'
@@ -90,7 +90,7 @@ def train_model(
     # 3. Create data loaders
 
     # (Initialize logging)
-    experiment = wandb.init(project= wb_project_name, entity="ultra-sound-segmentation" , name = wb_run_name ,resume='allow', anonymous='must')
+    experiment = wandb.init(project='U-Net', resume='allow', anonymous='must')
 
     experiment.config.update(
         dict(epochs=epochs, 
@@ -132,7 +132,7 @@ def train_model(
         epoch_loss = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
-                images, true_masks = batch['image'], batch['mask']
+                images, true_masks = batch['images'], batch['mask']
                 # print()
                 # print('true_masks',true_masks.shape)
                 # print('true_masks',torch.unique(true_masks))
