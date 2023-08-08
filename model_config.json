@@ -1,0 +1,18 @@
+{
+    "wb_project_name": "U_Net_Name",
+    "wb_run_name": "U_Net_trail_number [i]",
+    "VAE" : false,
+    "input_channels" : 4,
+    "output_classes" : 3,
+    "epochs" : 30,
+    "batch_size":  3,
+    "learning_rate":  2e-4,
+    "val_percent":  0.1,
+    "save_checkpoint": true,
+    "amp":  false,
+    "weight_decay":  1e-8,
+    "momentum":  0.999,
+    "gradient_clipping":  1.0,
+    "load_weights": false,
+    "saving_weights_dir": "/content/drive/MyDrive/GP_AI/Unet_VAE/"
+}
