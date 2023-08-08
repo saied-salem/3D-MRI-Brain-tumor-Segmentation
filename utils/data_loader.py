@@ -16,9 +16,7 @@ def readDate(json_path ):
 def splitData(images_mask_dict, test_size):
     data_size = len(images_mask_dict)
     indices = list(range(data_size))
-
-    train_indices, test_indices = train_test_split(indices, test_size=0.15, random_state=42)
-
+    train_indices, test_indices = train_test_split(indices, test_size=test_size, random_state=42)
     train_paths = [
         {
         "images": images_mask_dict[i]["images"],
@@ -41,7 +39,7 @@ def getLoader(batch_size,val_percent, json_path):
     train_files, validation_files = readDate(json_path)
 
     train_paths , val_paths= splitData(train_files, val_percent)
-    print(train_paths)
+    print("train_paths:",len(train_paths))
     train_transform = transforms.Compose(
         [
             transforms.LoadImaged(keys=["images", "mask"]),
@@ -68,7 +66,7 @@ def getLoader(batch_size,val_percent, json_path):
         ]
     )
 
-    train_ds = data.Dataset(data=train_files, transform=train_transform)
+    train_ds = data.Dataset(data=train_paths, transform=train_transform)
 
     train_loader = data.DataLoader(
         train_ds,
@@ -77,7 +75,7 @@ def getLoader(batch_size,val_percent, json_path):
         num_workers=2,
         pin_memory=True,
     )
-    val_ds = data.Dataset(data=validation_files, transform=val_transform)
+    val_ds = data.Dataset(data=val_paths, transform=val_transform)
     val_loader = data.DataLoader(
         val_ds,
         batch_size=1,

@@ -2,7 +2,6 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
-from scores import dice_coefficient
 from monai.metrics import DiceMetric
 from monai.transforms import (
     AsDiscrete,
