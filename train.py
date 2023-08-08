@@ -85,8 +85,8 @@ def train_model(
     else:
         multi_class = True
 
-    n_train = len(train_loader)
-    n_val = int(len(val_loader))
+    n_train = len(train_loader.dataset)
+    n_val = int(len(val_loader.dataset))
     # 3. Create data loaders
 
     # (Initialize logging)
@@ -132,7 +132,7 @@ def train_model(
         epoch_loss = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
-                images, true_masks = batch['images'], batch['mask']
+                images, true_masks = batch["images"].to(device), batch["mask"].to(device)
                 # print()
                 # print('true_masks',true_masks.shape)
                 # print('true_masks',torch.unique(true_masks))
@@ -189,7 +189,7 @@ def train_model(
                       histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
 
             
-            evaluate(model, val_loader,dice_metric, dice_metric_batch, device, amp, VAE_param)
+            evaluate(model, val_loader,dice_metric, dice_metric_batch,post_trans, device, amp, VAE_param)
             curr_metric = dice_metric.aggregate().item()
             scheduler.step(curr_metric)
 
@@ -209,7 +209,7 @@ def train_model(
             if curr_metric>best_metric :
                 Path(weights_dir).mkdir(parents=True, exist_ok=True)
                 state_dict = model.state_dict()
-                state_dict['mask_values'] = train_set.mask_values
+                # state_dict['mask_values'] = train_loader.dataset.mask_values
                 saving_path = weights_dir + 'best_checkpoint_dice_val_score.pth'
                 torch.save(state_dict, saving_path)
                 logging.info(f'Checkpoint {epoch} saved!')

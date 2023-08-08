@@ -13,19 +13,17 @@ from monai.metrics import DiceMetric
 
 @torch.inference_mode()
 def evaluate(model, dataloader,metric,metric_batch, post_trans, device, amp , VAE_param =False,):
-
-    
-
+  
     model.eval()
     num_val_batches = len(dataloader)
     dice_score = 0
 
     # iterate over the validation set
     with torch.autocast(device.type if device.type != 'mps' else 'cpu', enabled=amp):
-        for batch in tqdm(dataloader, total=num_val_batches, desc='Validation round', unit='batch', leave=False):
+        for batch in tqdm(dataloader, total=num_val_batches,dynamic_ncols=True, desc='Validation round', unit='batch', leave=False):
             val_inputs, val_labels = (
-                dataloader["images"].to(device),
-                dataloader["mask"].to(device),
+                batch["images"].to(device),
+                batch["mask"].to(device),
             )
             # val_outputs = inference(val_inputs)
             # print(val_inputs.shape)

@@ -62,11 +62,13 @@ def getLoader(batch_size,val_percent, json_path):
         [
             transforms.LoadImaged(keys=["images", "mask"]),
             transforms.ConvertToMultiChannelBasedOnBratsClassesd(keys="mask"),
+            transforms.RandSpatialCropd(keys=["images", "mask"], roi_size=[128, 128, 64], random_size=False),
+
             transforms.NormalizeIntensityd(keys="images", nonzero=True, channel_wise=True),
         ]
     )
 
-    train_ds = data.Dataset(data=train_paths, transform=train_transform)
+    train_ds = data.Dataset(data=train_paths[:10], transform=train_transform)
 
     train_loader = data.DataLoader(
         train_ds,
@@ -75,7 +77,7 @@ def getLoader(batch_size,val_percent, json_path):
         num_workers=2,
         pin_memory=True,
     )
-    val_ds = data.Dataset(data=val_paths, transform=val_transform)
+    val_ds = data.Dataset(data=val_paths[:10], transform=val_transform)
     val_loader = data.DataLoader(
         val_ds,
         batch_size=1,
