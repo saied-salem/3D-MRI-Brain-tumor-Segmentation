@@ -2,11 +2,7 @@
 ```angular2
 ├── Metrics        
 │   ├── dice_score.py
-│   └── evaluate.py 
-├── models          
-│   ├── basic_unet.py     
-│   ├── Unet.py    
-│   └── unet_blocks.py      
+│   └── evaluate.py     
 ├──utils            
 |   └── data_loader.py
 ├── train.py         
