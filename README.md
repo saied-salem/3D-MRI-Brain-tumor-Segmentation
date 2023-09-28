@@ -1,3 +1,19 @@
+# Code Structure
+```angular2
+├── Metrics        
+│   ├── dice_score.py
+│   └── evaluate.py 
+├── models          
+│   ├── basic_unet.py     
+│   ├── Unet.py    
+│   └── unet_blocks.py      
+├──utils            
+|   └── data_loader.py
+├── train.py         
+├── model_config.json       
+└── Run.py       
+```
+
 # 3D MRI-Brain-tumor-Segmentation
 
 Automatic MRI brain tumor segmentation is of vital importance for the disease diagnosis, monitoring, and treatment planning. We present a method for classification and
