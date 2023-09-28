@@ -7,7 +7,7 @@
 |   └── data_loader.py
 ├── train.py         
 ├── model_config.json       
-└── Run.py       
+└── run.py       
 ```
 
 # 3D MRI-Brain-tumor-Segmentation
